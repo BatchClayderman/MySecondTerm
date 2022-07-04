@@ -210,13 +210,13 @@ void showMap()//展示地图
 			int x = sx - dx;
 			int y = sy - dy;
 			/*
-			//const char* Symbol[6] = { "◎", "☆", "□", "▽", "▓", "■" };
+			//const char* Symbol[6] = { "◎", "☆", "□", "▽", "●", "■" };
 			字符说明：
 				玩家—◎
 				胜利—☆
 				通路—□
 				已走的路—▽
-				墙或雾—▓
+				墙或雾—●
 				迷宫外—■
 			*/
 			if (isOutBounds(x, y))
@@ -231,7 +231,7 @@ void showMap()//展示地图
 			}
 			if (fog[y][x])
 			{
-				printf("▓");
+				printf("●");
 				continue;
 			}
 			if ((!walk[y][x]) || (x == 1 && y == 1))
@@ -249,7 +249,7 @@ void showMap()//展示地图
 				printf("☆");
 				continue;
 			}
-			printf("▓");
+			printf("●");
 			continue;
 			int d = 0;
 			for (int i = 0; i < 4; ++i)
@@ -623,7 +623,7 @@ bool updata()//更新
 		break;
 	case 'H'://帮助
 	case 'h':
-		MessageBox(NULL, TEXT("按键控制（不区分大小写）：\n   上下左右—wsad 或 ikjl\n   帮助—h     刷新—x     设置—f\n   开灯—m     重来—r     炸弹—b\n   投降或退出—g     强退—长按Ctrl+C\n\n字符说明：\n   玩家—◎     胜利—☆\n   通路—□     已走的路—▽\n   墙或雾—▓     迷宫外—■\n\n点击“确定”以返回游戏。"), TEXT("迷宫—帮助"), MB_OK | MB_ICONINFORMATION | MB_TOPMOST);
+		MessageBox(NULL, TEXT("按键控制（不区分大小写）：\n   上下左右—wsad 或 ikjl\n   帮助—h     刷新—x     设置—f\n   开灯—m     重来—r     炸弹—b\n   投降或退出—g     强退—长按Ctrl+C\n\n字符说明：\n   玩家—◎     胜利—☆\n   通路—□     已走的路—▽\n   墙或雾—●     迷宫外—■\n\n点击“确定”以返回游戏。"), TEXT("迷宫—帮助"), MB_OK | MB_ICONINFORMATION | MB_TOPMOST);
 		break;
 	case 'G'://投降
 	case 'g':
@@ -690,7 +690,7 @@ int main()
 	hHook = SetWindowsHookEx(WH_CBT, (HOOKPROC)CBTHookProc1, NULL, GetCurrentThreadId());
 	if (hHook)
 	{
-		switch (MessageBox(NULL, TEXT("按键控制（不区分大小写）：\n   上下左右—wsad 或 ikjl\n   帮助—h     刷新—x     设置—f\n   开灯—m     重来—r     炸弹—b\n   投降或退出—g     强退—长按Ctrl+C\n\n字符说明：\n   玩家—◎     胜利—☆\n   通路—□     已走的路—▽\n   墙或雾—▓     迷宫外—■\n\n带上若干炸弹，移动玩家找到星星即为胜利！"), TEXT("迷宫游戏说明"), MB_YESNOCANCEL | MB_ICONINFORMATION | MB_TOPMOST))
+		switch (MessageBox(NULL, TEXT("按键控制（不区分大小写）：\n   上下左右—wsad 或 ikjl\n   帮助—h     刷新—x     设置—f\n   开灯—m     重来—r     炸弹—b\n   投降或退出—g     强退—长按Ctrl+C\n\n字符说明：\n   玩家—◎     胜利—☆\n   通路—□     已走的路—▽\n   墙或雾—●     迷宫外—■\n\n带上若干炸弹，移动玩家找到星星即为胜利！"), TEXT("迷宫游戏说明"), MB_YESNOCANCEL | MB_ICONINFORMATION | MB_TOPMOST))
 		{
 		case 7:
 			Settings(false);
