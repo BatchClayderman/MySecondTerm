@@ -1,0 +1,7 @@
+﻿  ConsoleApplication4.cpp
+E:\我的文档\学习\暨南大学\学术文件\第二学期\数据结构\C程序\ConsoleApplication4\ConsoleApplication4\ConsoleApplication4.cpp(571,18): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
+E:\我的文档\学习\暨南大学\学术文件\第二学期\数据结构\C程序\ConsoleApplication4\ConsoleApplication4\ConsoleApplication4.cpp(571,12): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
+E:\我的文档\学习\暨南大学\学术文件\第二学期\数据结构\C程序\ConsoleApplication4\ConsoleApplication4\ConsoleApplication4.cpp(572,10): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+E:\我的文档\学习\暨南大学\学术文件\第二学期\数据结构\C程序\ConsoleApplication4\ConsoleApplication4\ConsoleApplication4.cpp(573,19): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+E:\我的文档\学习\暨南大学\学术文件\第二学期\数据结构\C程序\ConsoleApplication4\ConsoleApplication4\ConsoleApplication4.cpp(552,9): warning C4102: “loop5_1”: 未引用的标签
+  ConsoleApplication4.vcxproj -> E:\我的文档\学习\暨南大学\学术文件\第二学期\数据结构\C程序\ConsoleApplication4\Debug\ConsoleApplication4.exe
