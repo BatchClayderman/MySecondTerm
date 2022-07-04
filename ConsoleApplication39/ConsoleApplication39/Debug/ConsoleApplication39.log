@@ -1,0 +1,4 @@
+﻿  ConsoleApplication39.cpp
+E:\我的文档\学习\暨南大学\学术文件\第二学期\数据结构\C程序\ConsoleApplication39\ConsoleApplication39\ConsoleApplication39.cpp(13,2): warning C4091: “typedef ”: 没有声明变量时忽略“ArrType”的左侧
+E:\我的文档\学习\暨南大学\学术文件\第二学期\数据结构\C程序\ConsoleApplication39\ConsoleApplication39\ConsoleApplication39.cpp(19,2): warning C4091: “typedef ”: 没有声明变量时忽略“Array”的左侧
+  ConsoleApplication39.vcxproj -> E:\我的文档\学习\暨南大学\学术文件\第二学期\数据结构\C程序\ConsoleApplication39\Debug\ConsoleApplication39.exe
