@@ -1,0 +1,48 @@
+#coding=gbk
+import os
+os.system("title ≈≈–Ú&color e&cls")
+def bubble_sort(ary):#√∞≈›≈≈–Ú
+	n=len(ary)
+	for i in range(n):
+		for j in range(1, n-i):
+			if ary[j-1]>ary[j]:
+				ary[j-1], ary[j]=ary[j], ary[j-1]
+	return ary
+def select_sort(ary):#—°‘Ò≈≈–Ú
+	n=len(ary)
+	for i in range(n):
+		min=i
+		for j in range(i+1, n):
+			if ary[j]<ary[min]:
+				min=j
+		ary[min], ary[i]=ary[i], ary[min]
+	return ary
+def insert_sort(ary):#≤Â»Î≈≈–Ú
+	n=len(ary)
+	for i in range(1, n):
+		if ary[i]<ary[i-1]:
+			temp=ary[i]
+			index=i
+			for j in range(i-1, -1, -1):
+				if ary[j]>temp:
+					ary[j+1]=ary[j]
+					index=j
+				else:
+					break
+			ary[index]=temp
+	return ary
+a=[]
+i=1
+while True:
+	os.system("cls")
+	print("«Î ‰»Îµ⁄"+str(i)+"∏ˆ ˝£® ‰»Î∑« ˝◊÷◊÷∑˚ÕÀ≥ˆ£©£∫")
+	try:
+		temp=float(input(""))
+		a.append(temp)
+		i+=1
+	except:
+		break
+os.system("cls")
+print("‘≠ ˝æ›£∫\n"+str(a)+"\n\n√∞≈›≈≈–Ú£∫\n"+str(bubble_sort(a))+"\n—°‘Ò≈≈–Ú£∫\n"+str(select_sort(a))+"\n≤Â»Î≈≈–Ú£∫\n"+str(insert_sort(a))+"\n\n\n ‰≥ˆÕÍ±œ£¨«Î∞¥»Œ“‚º¸ÕÀ≥ˆ°£")
+os.system("pause>nul&cls")
+quit()
