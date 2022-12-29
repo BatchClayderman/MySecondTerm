@@ -1,32 +1,50 @@
-#coding=gbk
 import os
-from sys import argv
+from sys import argv, exit, stdin
+from msvcrt import getch
+PLATFORM = __import__("platform").system().lower()
 
-# ¶¨Òå¿â´¦Àíº¯Êı
-def fixlib(cb, command):
-	print("Î´£¨ÕıÈ·£©°²×°"+cb+"¿â£¬ÕıÔÚ³¢ÊÔÖ´ĞĞ°²×°£¬ÇëÈ·±£ÄúµÄÍøÂçÁ¬½ÓÕı³£¡£")
-	os.system("py -m pip install "+cb)
+
+def clearScreen(fakeClear = 120): # è™šå‡çš„æ¸…å±å‡½æ•°
+	if stdin.isatty(): # åœ¨ç»ˆç«¯
+		if "windows" == PLATFORM:
+			os.system("cls")
+		elif "linux" == PLATFORM:
+			os.system("clear")
+		else:
+			try:
+				print("\n" * int(fakeClear))
+			except:
+				print("\n" * 120)
+	else:
+		try:
+			print("\n" * int(fakeClear))
+		except:
+			print("\n" * 120)
+
+def fixlib(cb, command): # å®šä¹‰åº“å¤„ç†å‡½æ•°
+	print("æœªï¼ˆæ­£ç¡®ï¼‰å®‰è£… " + cb + " åº“ï¼Œæ­£åœ¨å°è¯•æ‰§è¡Œå®‰è£…ï¼Œè¯·ç¡®ä¿æ‚¨çš„ç½‘ç»œè¿æ¥æ­£å¸¸ã€‚")
+	os.system("py -m pip install " + cb)
 	try:
 		exec(command)
 	except:
-		os.system("cls")
-		if os.popen("ver").read().upper().find("XP")==-1:
-			print("°²×°"+cb+"¿âÊ§°Ü£¬ÕıÔÚ³¢ÊÔÒÔ¹ÜÀíÔ±È¨ÏŞÖ´ĞĞ°²×°£¬ÇëÈ·±£ÄúµÄÍøÂçÁ¬½ÓÕı³£¡£")
+		clearScreen()
+		if os.popen("ver").read().upper().find("XP") == -1:
+			print("å®‰è£… " + cb + " åº“å¤±è´¥ï¼Œæ­£åœ¨å°è¯•ä»¥ç®¡ç†å‘˜æƒé™æ‰§è¡Œå®‰è£…ï¼Œè¯·ç¡®ä¿æ‚¨çš„ç½‘ç»œè¿æ¥æ­£å¸¸ã€‚")
 			os.system("mshta vbscript:createobject(\"shell.application\").shellexecute(\"py\",\"-m pip install "+cb+"\",\"\",\"runas\",\"1\")(window.close)")
-			print("ÒÑµ¯³öĞÂ´°¿Ú£¬È·ÈÏÊÚÈ¨²¢°²×°Íê³Éºó£¬Çë°´ÈÎÒâ¼ü¼ÌĞø¡£")
-			os.system("pause>nul")
+			print("å·²å¼¹å‡ºæ–°çª—å£ï¼Œç¡®è®¤æˆæƒå¹¶å®‰è£…å®Œæˆåï¼Œè¯·æŒ‰ä»»æ„é”®ç»§ç»­ã€‚")
+			getch()
 			try:
 				exec(command)
 			except:
-				print("ÎŞ·¨ÕıÈ·°²×°"+cb+"¿â£¬Çë°´ÈÎÒâ¼üÍË³ö£¬½¨ÒéÉÔºóÖØĞÂÆô¶¯±¾³ÌĞò¡£")
-				os.system("pause>nul&cls")
+				print("æ— æ³•æ­£ç¡®å®‰è£… " + cb + " åº“ï¼Œè¯·æŒ‰ä»»æ„é”®é€€å‡ºï¼Œå»ºè®®ç¨åé‡æ–°å¯åŠ¨æœ¬ç¨‹åºã€‚")
+				getch()
+				clearScreen()
 				exit()
 		else:
-			print("ÎŞ·¨ÕıÈ·°²×°"+cb+"¿â£¬Çë°´ÈÎÒâ¼üÍË³ö£¬½¨ÒéÉÔºóÖØĞÂÆô¶¯±¾³ÌĞò¡£")
+			print("æ— æ³•æ­£ç¡®å®‰è£… " + cb + " åº“ï¼Œè¯·æŒ‰ä»»æ„é”®é€€å‡ºï¼Œå»ºè®®ç¨åé‡æ–°å¯åŠ¨æœ¬ç¨‹åºã€‚")
 
-# ¶¨ÒåËã·¨º¯Êı
-def egcd(a, b):
-	if a==0:
+def egcd(a, b): # å®šä¹‰ç®—æ³•å‡½æ•°
+	if a == 0:
 		return b, 0, 1
 	else:
 		g, y, x = egcd(b % a, a)
@@ -41,7 +59,7 @@ def ne(n, e):
 	f = FactorDB(n)
 	f.connect()
 	result = f.get_factor_list()
-	if len(result)!=2:
+	if len(result) != 2:
 		return -1
 	# print(result)
 	p, q = result[0], result[1]
@@ -49,23 +67,23 @@ def ne(n, e):
 	# p = 14001864863580621636769
 	print("q =", q)
 	# q = 14901278358136141983377
-	d = modinv(e, (p-1)*(q-1))
+	d = modinv(e, (p - 1) * (q - 1))
 	return d
 
-# ¶¨Òå°ïÖúº¯Êı
+# å®šä¹‰å¸®åŠ©å‡½æ•°
 def help(option):
 	print("")
 	if option != "/?" and option != "-?":
-		print("\a´íÎó£ºÎŞĞ§µÄÃüÁîĞĞ²ÎÊı¡ª¡°"+str(option)+"¡±¡£")
-	print("ÃèÊö£º¸ø¶¨nºÍeµÄRSA½âÃÜÔËËã¡£\n\n²ÎÊıÁĞ±í£º\n\t/n\t\tÉèÖÃnµÄÖµ\n\t/e\t\tÉèÖÃeµÄÖµ\n\t[n]\t\tnµÄÖµ\n\t[e]\t\teµÄÖµ\n")
-	print("ÃüÁîĞĞ¸ñÊ½£º\n\tenRSA.py /n [n] /e [e]\n")
-	print("Ê¾Àı£º\n\tenRSA.py /n 208645685865220781237677030108874331729988913 /e 10111111111\n")
+		print("\aé”™è¯¯ï¼šæ— æ•ˆçš„å‘½ä»¤è¡Œå‚æ•°â€”â€œ" + str(option) + "â€ã€‚")
+	print("æè¿°ï¼šç»™å®šnå’Œeçš„RSAè§£å¯†è¿ç®—ã€‚\n\nå‚æ•°åˆ—è¡¨ï¼š\n\t/n\t\tè®¾ç½®nçš„å€¼\n\t/e\t\tè®¾ç½®eçš„å€¼\n\t[n]\t\tnçš„å€¼\n\t[e]\t\teçš„å€¼\n")
+	print("å‘½ä»¤è¡Œæ ¼å¼ï¼š\n\tenRSA.py /n [n] /e [e]\n")
+	print("ç¤ºä¾‹ï¼š\n\tenRSA.py /n 208645685865220781237677030108874331729988913 /e 10111111111\n")
 	if option == "/?" or option == "-?":
 		return 0
 	else:
 		return -1
 
-# ´¦ÀíÃüÁîĞĞ²ÎÊı
+# å¤„ç†å‘½ä»¤è¡Œå‚æ•°
 if "/?" in argv or "-?" in argv:
 	exit(help("/?"))
 if len(argv) == 5:
@@ -75,7 +93,7 @@ if len(argv) == 5:
 			if n < 4:
 				assert ""
 		except:
-			print("\a´íÎó£ºÌá¹©µÄ n Öµ²»ÕıÈ·¡£\n")
+			print("\aé”™è¯¯ï¼šæä¾›çš„ n å€¼ä¸æ­£ç¡®ã€‚\n")
 			exit(-1)
 	elif argv[1].lower() == "/e" or argv[1].lower() == "-e":
 		try:
@@ -83,7 +101,7 @@ if len(argv) == 5:
 			if e < 1:
 				assert ""
 		except:
-			print("\a´íÎó£ºÌá¹©µÄ e Öµ²»ÕıÈ·¡£\n")
+			print("\aé”™è¯¯ï¼šæä¾›çš„ e å€¼ä¸æ­£ç¡®ã€‚\n")
 			exit(-1)
 	if argv[3].lower() == "/n" or argv[3].lower() == "-n":
 		try:
@@ -91,7 +109,7 @@ if len(argv) == 5:
 			if n < 4:
 				assert ""
 		except:
-			print("\a´íÎó£ºÌá¹©µÄ n Öµ²»ÕıÈ·¡£\n")
+			print("\aé”™è¯¯ï¼šæä¾›çš„ n å€¼ä¸æ­£ç¡®ã€‚\n")
 			exit(-1)
 	elif argv[3].lower() == "/e" or argv[3].lower() == "-e":
 		try:
@@ -99,17 +117,17 @@ if len(argv) == 5:
 			if e < 1:
 				assert ""
 		except:
-			print("\a´íÎó£ºÌá¹©µÄ e Öµ²»ÕıÈ·¡£\n")
+			print("\aé”™è¯¯ï¼šæä¾›çš„ e å€¼ä¸æ­£ç¡®ã€‚\n")
 			exit(-1)
 	try:
 		print("n =", n)
 	except:
-		print("\a´íÎó£ºÎ´¶¨Òå n¡£")
+		print("\aé”™è¯¯ï¼šæœªå®šä¹‰ nã€‚")
 		exit(-1)
 	try:
 		print("e =", e)
 	except:
-		print("\a´íÎó£ºÎ´¶¨Òå e¡£")
+		print("\aé”™è¯¯ï¼šæœªå®šä¹‰ eã€‚")
 		exit(-1)
 	try:
 		from factordb.factordb import FactorDB
@@ -118,7 +136,7 @@ if len(argv) == 5:
 		from factordb.factordb import FactorDB
 	d = int(ne(n, e))
 	if d == -1:
-		print("\a´íÎó£ºÊäÈëµÄn¡¢eÖµÎŞĞ§£¬»òÃÜÔ¿²»ÊÇÏßĞÔµÄ¡£")
+		print("\aé”™è¯¯ï¼šè¾“å…¥çš„ nã€e å€¼æ— æ•ˆï¼Œæˆ–å¯†é’¥ä¸æ˜¯çº¿æ€§çš„ã€‚")
 		exit(-1)
 	else:
 		print("d =", d, "\n")
@@ -126,40 +144,41 @@ if len(argv) == 5:
 elif len(argv) != 1:
 	exit(help(argv[1:]))
 
-# Ö÷³ÌĞò
-os.system("title ¸ø¶¨nºÍeµÄRSA½âÃÜÔËËã&color e&cls")
+# ä¸»ç¨‹åº
+if stdin.isatty(): # åœ¨ç»ˆç«¯
+	os.system("title ç»™å®š n å’Œ e çš„ RSA è§£å¯†è¿ç®—&color e")
+clearScreen()
 try:
 	from factordb.factordb import FactorDB
 except:
 	fixlib("factordb-pycli", "from factordb.factordb import FactorDB")
 	from factordb.factordb import FactorDB
 while True:
-	os.system("cls")
+	clearScreen()
 	while True:
 		try:
-			os.system("cls")
-			print("ÇëÊäÈën£º")
-			n = int(input(""))
+			clearScreen()
+			n = int(input("è¯·è¾“å…¥ nï¼š"))
 			if n < 4:
 				assert ""
 			break
 		except:
-			os.system("cls")
-			print("\aÊäÈëµÄn²»ºÏ·¨£¬Çë°´ÈÎÒâ¼üÖØĞÂÊäÈë¡£")
-			os.system("pause>nul")
+			clearScreen()
+			print("\aè¾“å…¥çš„ n ä¸åˆæ³•ï¼Œè¯·æŒ‰ä»»æ„é”®é‡æ–°è¾“å…¥ã€‚")
+			getch()
 	while True:
 		try:
-			os.system("cls")
-			print("ÇëÊäÈëe£º")
-			e = int(input(""))
+			clearScreen()
+			print("n = {0}".format(n))
+			e = int(input("è¯·è¾“å…¥ eï¼š"))
 			if e < 1:
 				assert ""
 			break
 		except:
-			os.system("cls")
-			print("\aÊäÈëµÄe²»ºÏ·¨£¬Çë°´ÈÎÒâ¼üÖØĞÂÊäÈë¡£")
-			os.system("pause>nul")
-	os.system("cls")
+			clearScreen()
+			print("\aè¾“å…¥çš„ e ä¸åˆæ³•ï¼Œè¯·æŒ‰ä»»æ„é”®é‡æ–°è¾“å…¥ã€‚")
+			getch()
+	clearScreen()
 	print("n =", n)
 	print("e =", e)
 	# n = 208645685865220781237677030108874331729988913
@@ -168,13 +187,13 @@ while True:
 		d = int(ne(n, e))
 		# d = 197944482226238981644771241465020009358173687
 		if d == -1:
-			print("\a´íÎó£ºÊäÈëµÄn¡¢eÖµÎŞĞ§£¬»òÃÜÔ¿²»ÊÇÏßĞÔµÄ¡£")
+			print("\aé”™è¯¯ï¼šè¾“å…¥çš„ nã€e å€¼æ— æ•ˆï¼Œæˆ–å¯†é’¥ä¸æ˜¯çº¿æ€§çš„ã€‚")
 		else:
 			print("d =", d)
 	except:
-		print("\a´íÎó£ºÍøÂçÁ¬½ÓÊ§°Ü£¬ÎŞ·¨»ñÈ¡±¬ÆÆ×ÊÔ´¡£")
-	print("\n\nÊäÈë¡°exit¡±£¨²»Çø·Ö´óĞ¡Ğ´£©»Ø³µÍË³ö³ÌĞò£¬ÊäÈëÆäËü»òÖ±½Ó»Ø³µÔËĞĞĞÂÔËËã¡£")
+		print("\aé”™è¯¯ï¼šç½‘ç»œè¿æ¥å¤±è´¥ï¼Œæ— æ³•è·å–çˆ†ç ´èµ„æºã€‚")
+	print("\n\nè¾“å…¥â€œexitâ€ï¼ˆä¸åŒºåˆ†å¤§å°å†™ï¼‰å›è½¦é€€å‡ºç¨‹åºï¼Œè¾“å…¥å…¶å®ƒæˆ–ç›´æ¥å›è½¦è¿è¡Œæ–°è¿ç®—ã€‚")
 	Ens = input("")
 	if Ens.lower() == "exit":
-		os.system("cls")
+		clearScreen()
 		quit()
