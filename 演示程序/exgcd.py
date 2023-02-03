@@ -96,9 +96,7 @@ def gcd(m, n, ll = None, isPrintX = False) -> int:# 定义 gcd 函数
 				return q
 			else:	
 				return gcd(q, p % q, l)
-	except Exception as e:
-		print(e)
-		input()
+	except:
 		return -2
 
 def exgcd(p, q) -> tuple:# 定义exgcd 函数
@@ -210,7 +208,7 @@ def main() -> int:
 					getch()
 			isPrintX = (input("是否启用多项式打印[y/N]？").upper() == "Y")
 			clearScreen()
-			print("正在使用欧几里得除法运行计算（" + str(a) + "，" + str(b) + "），运算过程如下：")
+			print("正在使用欧几里得除法运行计算 gcd({0}, {1})，运算过程如下：".format(a, b))
 			result = gcd(a, b, isPrintX = isPrintX)
 			if result == -2:
 				clearScreen()
