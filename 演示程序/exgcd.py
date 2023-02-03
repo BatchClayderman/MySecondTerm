@@ -177,7 +177,7 @@ def main() -> int:
 			print("命令行参数不正确，请确保两个给定的数是正整数！")
 			return EXIT_FAILURE
 	else:
-		if isatty():
+		if stdin.isatty():
 			system("title 拓展欧几里得除法&color e")
 		clearScreen()
 		while True:
