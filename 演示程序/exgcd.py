@@ -36,11 +36,11 @@ def getMulMode(x, mul_mode = None) -> str:
 
 def getX(n, mul_mode = None) -> str: # None = 默认，0 = 隐藏，1 = 右输出" × "，-1 = 左输出" × "
 	if type(n) in (tuple, list, set):
-		return [getX(item) for item in n]
+		return [getX(item, mul_mode) for item in n]
 	elif type(n) == dict:
-		return {item:getX(item) for item in list(n.keys())}
+		return {item:getX(item, mul_mode) for item in list(n.keys())}
 	if type(n) != int:
-		return ""
+		return str(n)
 	elif n < 0:
 		return "-" + getX(-n)
 	in_list = bin(n)[2:]
@@ -72,11 +72,11 @@ def getDHX(n) -> str: # 连等号输出
 	elif type(n) == int:
 		return " = ".join([str(n), hex(n), getX(n)])
 	else:
-		return ""
+		return str(n)
 
-def gcd(m, n, ll = None) -> int:# 定义 gcd 函数
+def gcd(m, n, ll = None, isPrintX = False) -> int:# 定义 gcd 函数
 	if ll is None:
-		l = max(len(getX(m)), len(getX(n))) # l = len(str(max(abs(m), abs(n))))
+		l = max(len(getX(m)), len(getX(n))) if isPrintX else len(str(max(abs(m), abs(n))))
 		global pars
 		pars = []
 	else:
@@ -89,7 +89,8 @@ def gcd(m, n, ll = None) -> int:# 定义 gcd 函数
 			q = min(abs(m), abs(n))
 			if l != 0: # 为输出而设立
 				print("\t", " " * (l - len(str(p))), p, "=", q, "×", p // q, "＋", p % q)
-				print("\t", " " * (l - len(getX(p))), getX(p), "=", (getX(q, 1) + getX(p // q, -1)).replace("×  ×", "×") , "＋", getX(p % q))
+				if isPrintX:
+					print("\t", " " * (l - len(getX(p))), getX(p), "=", (getX(q, 1) + getX(p // q, -1)).replace("×  ×", "×") , "＋", getX(p % q))
 				pars.append([p, q, p // q, p % q])
 			if p % q == 0:
 				return q
@@ -131,25 +132,28 @@ def exgcd(p, q) -> tuple:# 定义exgcd 函数
 	else:
 		return int(j * p / abs(p)), int(i * q / abs(q))
 
-def printProcess() -> None:
+def printProcess(isPrintX = False) -> None:
 	if len(pars) == 1:
 		print("\t", pars[0][1], "=", pars[0][1], "×", 1, "－", pars[0][0], "×", 0)
 		return
 	elif len(pars) < 1:
 		return
-	length = len(getX(pars[-1][1])) # length = len(str(pars[-1][1]))
+	length = len(getX(pars[-1][1])) if isPrintX else len(str(pars[-1][1]))
 	a = pars[-2][0]; aa = None
 	b = 1
 	c = pars[-2][1]; cc = None
 	d = pars[-2][2]
-	print("\t", " " * (length - len(str(pars[-1][1])) - 1), pars[-1][1], "=", a, "×", b, "－", c, "×", d)
-	print("\t", " " * (length - len(getX(pars[-1][1])) - 1), getX(pars[-1][1]), "=", (getX(a, 1) + getX(b, -1)).replace("×  ×", "×"), "－", (getX(c, 1) + getX(d, -1)).replace("×  ×", "×"))
+	print("\t", " " * (length - len(str(pars[-1][1]))), pars[-1][1], "=", a, "×", b, "－", c, "×", d)
+	if isPrintX:
+		print("\t", " " * (length - len(getX(pars[-1][1]))), getX(pars[-1][1]), "=", (getX(a, 1) + getX(b, -1)).replace("×  ×", "×"), "－", (getX(c, 1) + getX(d, -1)).replace("×  ×", "×"))
+	length += 1#修正上方因多一个参数导致多余一个空格
 	for line in range(len(pars) - 3, -1, -1):
 		if cc is None:
 			aa = None # Swap
 			cc = [pars[line][0], 1, pars[line][1], pars[line][2]]
 			print("\t", " " * length, "=", a, "×", b, "－", "({0} × {1} － {2} × {3})".format(*cc), "×", d)
-			print("\t", " " * length, "=", (getX(a, 1) + getX(b, -1)).replace("×  ×", "×"), "－", "({0}{1} － {2}{3})".format(*getX(cc)).replace("×  ×", "×") + getX(d, -1))
+			if isPrintX:
+				print("\t", " " * length, "=", (getX(a, 1) + getX(b, -1)).replace("×  ×", "×"), "－", "({0}{1} － {2}{3})".format(getX(cc[0], 1), getX(cc[1], -1), getX(cc[2], 1), getX(cc[3], -1)).replace("×  ×", "×") + getX(d, -1))
 			c = cc[0]
 			b += cc[3] * d
 			d *= cc[1]
@@ -157,24 +161,30 @@ def printProcess() -> None:
 			cc = None # Swap
 			aa = [pars[line][0], 1, pars[line][1], pars[line][2]]
 			print("\t", " " * length, "=", "({0} × {1} － {2} × {3})".format(*aa), "×", b, "－", c, "×", d)
-			print("\t", " " * length, "=", "({0}{1} － {2}{3})".format(*getX(aa)).replace("×  ×", "×") + getX(b, -1), "－", (getX(c, 1) + getX(d, -1)).replace("×  ×", "×"))
+			if isPrintX:
+				print("\t", " " * length, "=", "({0}{1} － {2}{3})".format(getX(aa[0], 1), getX(aa[1], -1), getX(aa[2], 1), getX(aa[3], -1)).replace("×  ×", "×") + getX(b, -1), "－", (getX(c, 1) + getX(d, -1)).replace("×  ×", "×"))
 			a = aa[0]
 			d += aa[3] * b
 			b *= aa[1]
 		print("\t", " " * length, "=", a, "×", b, "－", c, "×", d)
-		print("\t", " " * length, "=", (getX(a, 1) + getX(b, -1)).replace("×  ×", "×"), "－", (getX(c, 1) + getX(d, -1)).replace("×  ×", "×"))			
+		if isPrintX:
+			print("\t", " " * length, "=", (getX(a, 1) + getX(b, -1)).replace("×  ×", "×"), "－", (getX(c, 1) + getX(d, -1)).replace("×  ×", "×"))			
 	print()
 	
 def main() -> int:
-	if 3 == len(argv):
+	if 3 == len(argv) or 4 == len(argv):
 		try:
 			a = int(argv[1])
 			b = int(argv[2])
-			print("gcd({0}，{1}) = {2}".format(getDHX(a), getDHX(b), getDHX(gcd(a, b, 0))))
-			print("({0}，{1})".format(*getDHX(exgcd(a, b))))
+			if 4 == len(argv) and ("Y" == argv[3].upper() or "/Y" == argv[3].upper()):
+				print("gcd({0}，{1}) = {2}".format(getDHX(a), getDHX(b), getDHX(gcd(a, b, 0))))
+				print("({0}，{1})".format(*getDHX(exgcd(a, b))))
+			else:
+				print("gcd({0}，{1}) = {2}".format(a, b, gcd(a, b, 0)))
+				print("({0}，{1})".format(*exgcd(a, b)))
 			return EXIT_SUCCESS
 		except:
-			print("命令行参数不正确，请确保两个给定的数是正整数！")
+			print("命令行参数不正确，请确保两个给定的数是（正）整数！")
 			return EXIT_FAILURE
 	else:
 		if stdin.isatty():
@@ -182,7 +192,7 @@ def main() -> int:
 		clearScreen()
 		while True:
 			while True:
-				system("cls")
+				clearScreen()
 				try:
 					a = int(input("请输入整数 a："))
 					break
@@ -198,9 +208,10 @@ def main() -> int:
 				except:
 					print("\a错误：输入的数不是整数，请按任意键重新输入。")
 					getch()
+			isPrintX = (input("是否启用多项式打印[y/N]？").upper() == "Y")
 			clearScreen()
 			print("正在使用欧几里得除法运行计算（" + str(a) + "，" + str(b) + "），运算过程如下：")
-			result = gcd(a, b)
+			result = gcd(a, b, isPrintX = isPrintX)
 			if result == -2:
 				clearScreen()
 				print("gcd(a = {0}，b = {1})".format(a, b))
@@ -208,14 +219,23 @@ def main() -> int:
 			else:
 				if result == 0:
 					clearScreen()
-					print("a = {0} 和 b = {1} 的最大公因数为 {2}。".format(getDHX(a), getDHX(b), getDHX(max(abs(a), abs(b)))))
+					if isPrintX:
+						print("a = {0} 和 b = {1} 的最大公因数为 {2}。".format(getDHX(a), getDHX(b), getDHX(max(abs(a), abs(b)))))
+					else:
+						print("a = {0} 和 b = {1} 的最大公因数为 {2}。".format(a, b, max(abs(a), abs(b))))
 				else:
-					print("\n经运算，a = {0} 和 b = {1} 的最大公因数为 {2}。".format(getDHX(a), getDHX(b), getDHX(result)))
+					if isPrintX:
+						print("\n经运算，a = {0} 和 b = {1} 的最大公因数为 {2}。".format(getDHX(a), getDHX(b), getDHX(result)))
+					else:
+						print("\n经运算，a = {0} 和 b = {1} 的最大公因数为 {2}。".format(a, b, result))
 				s, t = exgcd(a, b)
 				if type(s) == int and type(t) == int:
 					print("正在使用拓展欧几里得除法求 s、t，运算过程如下：")
-					printProcess()
-				print("\n拓展欧几里得除法得 s = {0}，t = {1}。".format(getDHX(s), getDHX(t)))
+					printProcess(isPrintX = isPrintX)
+				if isPrintX:
+					print("\n拓展欧几里得除法得 s = {0}，t = {1}。".format(getDHX(s), getDHX(t)))
+				else:
+					print("\n拓展欧几里得除法得 s = {0}，t = {1}。".format(s, t))
 			print("\n\n\n输入“exit”（不区分大小写）回车退出程序，输入其它或直接回车运行新运算。")
 			if "exit" == input("").lower():
 				clearScreen()
