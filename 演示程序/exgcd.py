@@ -126,9 +126,9 @@ def exgcd(p, q) -> tuple:# 定义exgcd 函数
 		o = c // d
 		r = c % d
 	if abs(p) >= abs(q):
-		return int(i * p / abs(p)), int(j * q / abs(q))
+		return (i if p >= 0 else -i), (j if q >= 0 else -j)
 	else:
-		return int(j * p / abs(p)), int(i * q / abs(q))
+		return (j if p >= 0 else -j), (i if q >= 0 else -i)
 
 def printProcess(isPrintX = False) -> None:
 	if len(pars) == 1:
