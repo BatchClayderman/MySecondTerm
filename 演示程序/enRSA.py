@@ -2,6 +2,9 @@ import os
 from sys import argv, exit, stdin
 from msvcrt import getch
 PLATFORM = __import__("platform").system().lower()
+EXIT_SUCCESS = 0
+EXIT_FAILURE = 1
+EOF = (-1)
 
 
 def clearScreen(fakeClear = 120): # 虚假的清屏函数
@@ -28,7 +31,7 @@ def fixlib(cb, command): # 定义库处理函数
 		exec(command)
 	except:
 		clearScreen()
-		if os.popen("ver").read().upper().find("XP") == -1:
+		if "windows" == PLATFORM and os.popen("ver").read().upper().find("XP") == -1:
 			print("安装 " + cb + " 库失败，正在尝试以管理员权限执行安装，请确保您的网络连接正常。")
 			os.system("mshta vbscript:createobject(\"shell.application\").shellexecute(\"py\",\"-m pip install "+cb+"\",\"\",\"runas\",\"1\")(window.close)")
 			print("已弹出新窗口，确认授权并安装完成后，请按任意键继续。")
@@ -71,64 +74,102 @@ def ne(n, e):
 	return d
 
 # 定义帮助函数
-def help(option):
-	print("")
+def help(option) -> int:
+	print()
 	if option != "/?" and option != "-?":
 		print("\a错误：无效的命令行参数—“" + str(option) + "”。")
-	print("描述：给定n和e的RSA解密运算。\n\n参数列表：\n\t/n\t\t设置n的值\n\t/e\t\t设置e的值\n\t[n]\t\tn的值\n\t[e]\t\te的值\n")
-	print("命令行格式：\n\tenRSA.py /n [n] /e [e]\n")
-	print("示例：\n\tenRSA.py /n 208645685865220781237677030108874331729988913 /e 10111111111\n")
-	if option == "/?" or option == "-?":
-		return 0
+	print("描述：给定n和e的RSA解密运算。\n\n参数列表：\n\t/n\t\t设置n的值\n\t/e\t\t设置e的值\n\t[n]\t\tn的值\n\t[e]\t\te的值\n\t[c]\t\tc的值（可选）\n")
+	print("命令行格式：\n\tenRSA.py /n [n] /e [e] /c [c]\n")
+	print("示例：")
+	print("\tenRSA.py /n 208645685865220781237677030108874331729988913 /e 10111111111")
+	print("\tenRSA.py /n 52325875250719834038466049947961388071650687620177969152235704766211385392939 /e 65537 /c 34235083603255394631472769355891395597556301609076426725471325009186091570619\n")
+	if option.lower() in ("/?", "-?", "?", "/h", "-h", "h", "/help", "--help", "help"):
+		return EXIT_SUCCESS
 	else:
-		return -1
+		return EOF
 
 # 处理命令行参数
 if "/?" in argv or "-?" in argv:
 	exit(help("/?"))
-if len(argv) == 5:
-	if argv[1].lower() == "/n" or argv[1].lower() == "-n":
+if len(argv) in (5, 7):
+	if argv[1].lower() in ("/n", "-n", "n"):
 		try:
 			n = int(argv[2])
-			if n < 4:
-				assert ""
+			assert(n >= 4)
 		except:
 			print("\a错误：提供的 n 值不正确。\n")
-			exit(-1)
-	elif argv[1].lower() == "/e" or argv[1].lower() == "-e":
+			exit(EOF)
+	elif argv[1].lower() in ("/e", "-e", "e"):
 		try:
 			e = int(argv[2])
-			if e < 1:
-				assert ""
+			assert(e >= 1)
 		except:
 			print("\a错误：提供的 e 值不正确。\n")
-			exit(-1)
-	if argv[3].lower() == "/n" or argv[3].lower() == "-n":
+			exit(EOF)
+	elif argv[1].lower() in ("/c", "-c", "c"):
+		try:
+			c = int(argv[2])
+			assert(c >= 0)
+		except:
+			print("\a错误：提供的 c 值不正确。\n")
+			exit(EOF)
+	if argv[3].lower() in ("/n", "-n", "n"):
 		try:
 			n = int(argv[4])
-			if n < 4:
-				assert ""
+			assert(n >= 4)
 		except:
 			print("\a错误：提供的 n 值不正确。\n")
-			exit(-1)
-	elif argv[3].lower() == "/e" or argv[3].lower() == "-e":
+			exit(EOF)
+	elif argv[3].lower() in ("/e", "-e", "e"):
 		try:
 			e = int(argv[4])
-			if e < 1:
-				assert ""
+			assert(e >= 1)
 		except:
 			print("\a错误：提供的 e 值不正确。\n")
-			exit(-1)
+			exit(EOF)
+	elif argv[3].lower() in ("/c", "-c", "c"):
+		try:
+			c = int(argv[4])
+			assert(c >= 0)
+		except:
+			print("\a错误：提供的 e 值不正确。\n")
+			exit(EOF)
+	if len(argv) == 7:
+		if argv[5].lower() in ("/n", "-n", "n"):
+			try:
+				n = int(argv[6])
+				assert(n >= 4)
+			except:
+				print("\a错误：提供的 n 值不正确。\n")
+				exit(EOF)
+		elif argv[5].lower() in ("/e", "-e", "e"):
+			try:
+				e = int(argv[6])
+				assert(e >= 1)
+			except:
+				print("\a错误：提供的 e 值不正确。\n")
+				exit(EOF)
+		elif argv[5].lower() in ("/c", "-c", "c"):
+			try:
+				c = int(argv[6])
+				assert(c >= 0)
+			except:
+				print("\a错误：提供的 e 值不正确。\n")
+				exit(EOF)
 	try:
 		print("n =", n)
 	except:
 		print("\a错误：未定义 n。")
-		exit(-1)
+		exit(EOF)
 	try:
 		print("e =", e)
 	except:
 		print("\a错误：未定义 e。")
-		exit(-1)
+		exit(EOF)
+	try:
+		print("c =", c)
+	except:
+		c = None
 	try:
 		from factordb.factordb import FactorDB
 	except:
@@ -159,8 +200,7 @@ while True:
 		try:
 			clearScreen()
 			n = int(input("请输入 n："))
-			if n < 4:
-				assert ""
+			assert(n >= 4)
 			break
 		except:
 			clearScreen()
@@ -171,13 +211,29 @@ while True:
 			clearScreen()
 			print("n = {0}".format(n))
 			e = int(input("请输入 e："))
-			if e < 1:
-				assert ""
+			assert(e >= 1)
 			break
 		except:
 			clearScreen()
 			print("\a输入的 e 不合法，请按任意键重新输入。")
 			getch()
+	while True:
+		try:
+			clearScreen()
+			print("n = {0}".format(n))
+			print("e = {0}".format(e))
+			c = input("请输入 c（直接回车可跳过）：")
+			if c:
+				c = int(c)
+				assert(c >= 0)
+			else:
+				c = None
+			break
+		except:
+			clearScreen()
+			print("\a输入的 e 不合法，请按任意键重新输入。")
+			getch()
+	
 	clearScreen()
 	print("n =", n)
 	print("e =", e)
@@ -190,10 +246,12 @@ while True:
 			print("\a错误：输入的 n、e 值无效，或密钥不是线性的。")
 		else:
 			print("d =", d)
+			if c is not None:
+				print("m =", pow(c, d , n))		
 	except:
 		print("\a错误：网络连接失败，无法获取爆破资源。")
 	print("\n\n输入“exit”（不区分大小写）回车退出程序，输入其它或直接回车运行新运算。")
 	Ens = input("")
 	if Ens.lower() == "exit":
 		clearScreen()
-		quit()
+		exit(EXIT_SUCCESS)
