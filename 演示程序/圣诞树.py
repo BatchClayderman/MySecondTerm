@@ -1,8 +1,7 @@
-#coding=gbk
 import os
 from turtle import *
 import random
-os.system("title 圣诞老人祝您圣诞节快乐！Merry Christmas!&cls&mshta vbscript:msgbox(\"亲爱的主人，您好，下面请允许我为您绘制一棵精致的圣诞树。\",64,\"圣诞节快乐，天天快乐哟！\")(window.close)")
+os.system("title 鍦ｈ癁鑰佷汉绁濇偍鍦ｈ癁鑺傚揩涔愶紒Merry Christmas!&cls&mshta vbscript:msgbox(\"浜茬埍鐨勪富浜猴紝鎮ㄥソ锛屼笅闈㈣鍏佽鎴戜负鎮ㄧ粯鍒朵竴妫电簿鑷寸殑鍦ｈ癁鏍戙�俓",64,\"鍦ｈ癁鑺傚揩涔愶紝澶╁ぉ蹇箰鍝燂紒\")(window.close)")
 title("May this festive season sparkle and shine, may all of your wishes and dreams come true!")
 bgcolor("black")
 n=100.0

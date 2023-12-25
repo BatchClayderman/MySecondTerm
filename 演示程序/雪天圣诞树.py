@@ -1,8 +1,7 @@
-#coding=gbk
 import os
 from turtle import *
 from random import random, randint
-os.system("title Ê¥µ®ÀÏÈË×£ÄúÊ¥µ®½Ú¿ìÀÖ£¡Merry Christmas!&cls&mshta vbscript:msgbox(\"Ç×°®µÄÖ÷ÈË£¬ÇëÔÊĞíÎÒÎªÄú»æÖÆÒ»¿ÃÊ¥µ®Ê÷¡£\",64,\"Ê¥µ®½Ú¿ìÀÖ£¬ÒªÌìÌì¿ìÀÖÓ´£¡\")(window.close)")
+os.system("title åœ£è¯è€äººç¥æ‚¨åœ£è¯èŠ‚å¿«ä¹ï¼Merry Christmas!&cls&mshta vbscript:msgbox(\"äº²çˆ±çš„ä¸»äººï¼Œè¯·å…è®¸æˆ‘ä¸ºæ‚¨ç»˜åˆ¶ä¸€æ£µåœ£è¯æ ‘ã€‚\",64,\"åœ£è¯èŠ‚å¿«ä¹ï¼Œè¦å¤©å¤©å¿«ä¹å“Ÿï¼\")(window.close)")
 title("May this festive season sparkle and shine, may all of your wishes and dreams come true!")
 bgcolor("mistyrose")
 n = 100.0
@@ -58,22 +57,22 @@ for i in range(200):
 
 
 def drawsnow():
-	ht()  #Òş²Ø±ÊÍ·£¬ht=hideturtle
-	pensize(2)  #¶¨Òå±ÊÍ·´óĞ¡
-	for i in range(200): #»­¶àÉÙÑ©»¨
-		pencolor("white") #¶¨Òå»­±ÊÑÕÉ«Îª°×É«£¬ÆäÊµ¾ÍÊÇÑ©»¨Îª°×É«
-		pu() #Ìá±Ê
-		setx(randint(-350, 350)) #¶¨Òåx×ø±ê£¬Ëæ»ú´Ó-350µ½350Ö®¼äÑ¡Ôñ
-		sety(randint(-100, 350)) #¶¨Òåy×ø±ê£¬×¢ÒâÑ©»¨Ò»°ãÔÚµØÉÏ²»»áÂäÏÂ£¬ËùÒÔ²»»á´ÓÌ«Ğ¡µÄ×İ×ùÖá¿ªÊ¼
-		pd() #Âä±Ê
-		dens = 6 #Ñ©»¨°êÊıÉèÎª6
-		snowsize = randint(1,10) #¶¨ÒåÑ©»¨´óĞ¡
-		for j in range(dens): #¾ÍÊÇ6£¬ÄÇ¾ÍÊÇ»­5´Î£¬Ò²¾ÍÊÇÒ»¸öÑ©»¨Îå½ÇĞÇ
-			#forward(int(snowsize))  #int£¨£©È¡ÕûÊı
+	ht()  #éšè—ç¬”å¤´ï¼Œht=hideturtle
+	pensize(2)  #å®šä¹‰ç¬”å¤´å¤§å°
+	for i in range(200): #ç”»å¤šå°‘é›ªèŠ±
+		pencolor("white") #å®šä¹‰ç”»ç¬”é¢œè‰²ä¸ºç™½è‰²ï¼Œå…¶å®å°±æ˜¯é›ªèŠ±ä¸ºç™½è‰²
+		pu() #æç¬”
+		setx(randint(-350, 350)) #å®šä¹‰xåæ ‡ï¼Œéšæœºä»-350åˆ°350ä¹‹é—´é€‰æ‹©
+		sety(randint(-100, 350)) #å®šä¹‰yåæ ‡ï¼Œæ³¨æ„é›ªèŠ±ä¸€èˆ¬åœ¨åœ°ä¸Šä¸ä¼šè½ä¸‹ï¼Œæ‰€ä»¥ä¸ä¼šä»å¤ªå°çš„çºµåº§è½´å¼€å§‹
+		pd() #è½ç¬”
+		dens = 6 #é›ªèŠ±ç“£æ•°è®¾ä¸º6
+		snowsize = randint(1,10) #å®šä¹‰é›ªèŠ±å¤§å°
+		for j in range(dens): #å°±æ˜¯6ï¼Œé‚£å°±æ˜¯ç”»5æ¬¡ï¼Œä¹Ÿå°±æ˜¯ä¸€ä¸ªé›ªèŠ±äº”è§’æ˜Ÿ
+			#forward(int(snowsize))  #intï¼ˆï¼‰å–æ•´æ•°
 			fd(int(snowsize))
 			backward(int(snowsize))
-			#bd(int(snowsize))  #×¢ÒâÃ»ÓĞbd=backward£¬µ«ÓĞfd=forward£¬Ğ¡bug
-			right(int(360/dens))  #×ª¶¯½Ç¶È
+			#bd(int(snowsize))  #æ³¨æ„æ²¡æœ‰bd=backwardï¼Œä½†æœ‰fd=forwardï¼Œå°bug
+			right(int(360/dens))  #è½¬åŠ¨è§’åº¦
  
 drawsnow()
 done()
