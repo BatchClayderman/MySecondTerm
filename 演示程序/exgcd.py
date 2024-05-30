@@ -8,7 +8,7 @@ pars = []
 
 
 def clearScreen(fakeClear = 120) -> None:
-	if stdin.isatty():#在终端
+	if stdin.isatty(): # 在终端
 		if "windows" == PLATFORM:
 			system("cls")
 		elif "linux" == PLATFORM:
@@ -99,7 +99,7 @@ def gcd(m, n, ll = None, isPrintX = False) -> int:# 定义 gcd 函数
 	except:
 		return -2
 
-def exgcd(p, q) -> tuple:# 定义exgcd 函数
+def exgcd(p, q) -> tuple: # 定义exgcd 函数
 	if p == 0 and q != 0:
 		return "任意整数", 1
 	elif q == 0 and p != 0:
